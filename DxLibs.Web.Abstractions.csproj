@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp2.0;net461</TargetFrameworks>
+    <Timestamp>$([System.DateTime]::Now.ToString("yyyyMMdd-HHmm"))</Timestamp>
+    <Version>0.0.1-beta$(Timestamp)</Version>
+    <RootNamespace>DxLibs.Web</RootNamespace>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Company>Dx Libs</Company>
+    <Authors>Dx Team</Authors>
+    <Product>Web Abstractions library</Product>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' OR '$(TargetFramework)' == 'netstandard2.0' ">
+    <DefineConstants>NETCORE</DefineConstants>
+    <BuildFor>NETCORE</BuildFor>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net461' ">
+    <DefineConstants>FW</DefineConstants>
+    <BuildFor>FW</BuildFor>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" '$(BuildFor)' == 'FW' ">
+    <PackageReference Include="Owin" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(BuildFor)' == 'NETCORE'">
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.0.0" />
+  </ItemGroup>
+</Project>
